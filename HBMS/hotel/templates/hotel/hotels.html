@@ -1,0 +1,136 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel List</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 20px;
+            color: #000; /* Set the text color to black */
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .hotel {
+            display: flex;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            background-color: #fff;
+            width: 100%; /* Expand the hotel boxes to full width */
+        }
+
+        .hotel img {
+            max-height: 250px;
+            max-width: 150px;
+            margin-right: 10px;
+        }
+
+        .hotel-details {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .amenities {
+            flex: 1;
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Add other CSS styles as needed */
+    </style>
+</head>
+<body>
+    <h1>Hotel List</h1>
+
+    <!-- Check-in and Check-out Date Fields -->
+    <form action="{% url 'filter_hotels' %}" method="get">
+        <label for="checkin">Check-in Date:</label>
+        <input type="date" id="checkin" name="checkin">
+        <label for="checkout">Check-out Date:</label>
+        <input type="date" id="checkout" name="checkout">
+        <button type="submit">Filter Hotels</button>
+    </form>
+
+    <!-- Load the static tag library -->
+    {% load static %}
+
+    <!-- Hotel List -->
+<!-- Hotel List -->
+{% for hotel in hotels %}
+<div class="hotel">
+
+
+    <div class="hotel-details">
+        <h2>{{ hotel.name }}</h2>
+        <p>Price per room: ${{ hotel.price_per_room }}</p>
+        <div class="room-selection">
+            <label for="roomCount{{ hotel.id }}">Number of Rooms:</label>
+            <input type="number" id="roomCount{{ hotel.id }}" min="1" value="1" onchange="updateTotal({{ hotel.id }}, {{ hotel.price_per_room }})">
+        </div>
+        <p class="total-price">Total Price: $<span id="totalPrice{{ hotel.id }}">{{ hotel.price_per_room }}</span></p>
+        <button onclick="bookNow({{ hotel.id }}, {{ hotel.price_per_room }})">Book Now</button>
+    </div>
+    <div class="amenities">
+        <p>Amenities: {{ hotel.amenities }}</p>
+        <p>Max Persons: {{ hotel.max_persons }}</p>
+    </div>
+</div>
+{% endfor %}
+
+    <!-- Pagination with Next and Back buttons -->
+    <div class="pagination">
+        {% if hotels.has_previous %}
+            <a href="?page=1" class="pagination-button">First</a>
+            <a href="?page={{ hotels.previous_page_number }}" class="pagination-button">Back</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ hotels.number }} of {{ hotels.paginator.num_pages }}.
+        </span>
+
+        {% if hotels.has_next %}
+            <a href="?page={{ hotels.next_page_number }}" class="pagination-button">Next</a>
+            <a href="?page={{ hotels.paginator.num_pages }}" class= "pagination-button">Last</a>
+        {% endif %}
+    </div>
+
+    <script>
+        function updateTotal(hotelId, pricePerRoom) {
+            const roomInput = document.getElementById(`roomCount${hotelId}`);
+            const totalPriceSpan = document.getElementById(`totalPrice${hotelId}`);
+            const numRooms = parseInt(roomInput.value);
+
+            if (!isNaN(numRooms) && numRooms >= 1) {
+                const total = pricePerRoom * numRooms;
+                totalPriceSpan.textContent = total;
+            } else {
+                totalPriceSpan.textContent = pricePerRoom;
+            }
+        }
+
+        function bookNow(hotelId, pricePerRoom) {
+            const roomInput = document.getElementById(`roomCount${hotelId}`);
+            const numRooms = parseInt(roomInput.value);
+
+            if (!isNaN(numRooms) && numRooms >= 1) {
+                const url = `/hotels/${hotelId}/room/${numRooms}/confirm/${pricePerRoom}/`;
+                window.location.href = url;
+            } else {
+                alert("Please enter a valid number of rooms.");
+            }
+        }
+    </script>
+</body>
+</html>

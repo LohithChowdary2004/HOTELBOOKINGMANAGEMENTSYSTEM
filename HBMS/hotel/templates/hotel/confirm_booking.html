@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Booking</title>
+</head>
+<body>
+    <h1>Confirm Booking</h1>
+
+    <h2>Hotel: {{ hotel.name }}</h2>
+    <p>Number of Rooms: {{ num_rooms }}</p>
+    <p>Price per Room: ${{ hotel.price_per_room }}</p>
+
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="checkin_date">Check-in Date:</label>
+        <input type="date" id="checkin_date" name="checkin_date" required>
+        <label for ="checkout_date">Check-out Date:</label>
+        <input type="date" id="checkout_date" name="checkout_date" required>
+
+        <!-- Calculate and display the Total Price directly in the template -->
+
+
+        <p>Total Amount: ${{ total_amount }}</p>
+
+
+
+        <!-- Additional fields can be added here based on your requirements -->
+
+        <button type="submit">Pay Now</button>
+    </form>
+</body>
+</html>

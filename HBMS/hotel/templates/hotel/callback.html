@@ -1,0 +1,11 @@
+{% extends 'hotel/base.html' %}
+{% block content %}
+<div>
+    <h1>Payment Status</h1>
+    {% if status == 'SUCCESS' %}
+        <p>Your payment was successful. Thank you!</p>
+    {% else %}
+        <p>Payment failed. Please try again.</p>
+    {% endif %}
+</div>
+{% endblock %}

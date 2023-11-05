@@ -1,0 +1,17 @@
+{% extends "hotel/base.html" %}
+{% block content %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code</title>
+</head>
+<body>
+    <p style="font-size: 18px; color: #333; text-align: center;">
+        You can contact us by scanning this QR Code
+    </p>
+    <!-- Display the QR code image with a border and half the size -->
+    <img src="{% static 'hotel/images/contact.png' %}" alt="QR Code" style="border: 2px solid #333; display: block; margin: 0 auto; height: 300px; width: 300px;">
+    <!-- Other content can be added here -->
+</body>
+{% endblock content %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Set the background image */
+        body {
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/014/468/621/small/abstract-digital-technology-background-with-concept-security-vector.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Center the login form vertically and horizontally */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Style the login form */
+        .login-form {
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+            margin-top: 10%;
+        }
+
+        .login-form h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .login-form button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .login-form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style the message and register link */
+        .message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .register-link {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h3>Login</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button>Login</button>
+        </form>
+        <p class="message">{{ message }}</p>
+        <a class="register-link" href="{% url 'register' %}">Don't have an account? Sign Up Here</a>
+    </div>
+</body>
+</html>

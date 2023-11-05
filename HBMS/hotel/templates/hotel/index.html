@@ -1,0 +1,66 @@
+{% extends 'hotel/base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    /* CSS for form container */
+    .payment-form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: purple; /* Change the background color to purple */
+    }
+
+    /* CSS for form fields */
+    .form-label {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #000; /* Text color is black */
+    }
+
+    .form-control {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        color: #000; /* Text color is black */
+    }
+
+    /* CSS for the "Pay Now" button */
+    .btn-primary {
+        display: block;
+        width: 50%; /* Reduced the width to 50% */
+        padding: 10px;
+        font-size: 18px;
+        background-color: #007bff;
+        color: #000; /* Text color is black */
+        border: none;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+</head>
+<body>
+    <div class="payment-form">
+        <form action="{% url 'payment' %}" method="POST">
+            {% csrf_token %}
+            <label for="name" class="form-label">Name</label>
+            <input type="name" name="name" class="form-control" id="name" required>
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" name="amount" class="form-control" id="amount" required>
+            <button type="submit" class="btn btn-primary">Pay Now</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

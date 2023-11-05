@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://img.freepik.com/free-vector/happy-tourists-choosing-hotel-booking-room-online-flat-illustration_74855-10811.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1699056000&semt=ais') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 60%; /* Use the full width of the screen */
+            margin: 0 auto; /* Center the container horizontally */
+            background-color: rgba(255, 255, 255, 0.8); /* Background color with some transparency */
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .room {
+            width: calc(50% - 10px); /* Two boxes per row with 10px spacing between them */
+            margin: 20px 5px; /* Increased the margin for spacing between rooms and added some horizontal spacing */
+            float: left; /* Float the rooms to the left */
+            clear: both;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff; /* Room background color */
+            text-align: center; /* Center-align room contents */
+        }
+
+        .room img {
+            width: 100%; /* Keep the images at 100% width */
+            max-height: 180px; /* Decreased the maximum height of images */
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .room:hover {
+            transform: scale(1.1);
+        }
+
+        .room-details {
+            padding: 10px;
+        }
+
+        .room h2 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .room-description {
+            margin: 10px 0;
+        }
+
+        .room-count {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .book-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+
+        .book-button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Our Rooms</h1>
+    </header>
+    <div class="container">
+        <div class="room">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRILGsF6Uu2T8gydpu4mIrljlHz4vFm879iUd4Wo800&s" alt="Room 1">
+            <div class="room-details">
+                <h2>Standard Room</h2>
+                <p class="room-description">Comfortable room with basic amenities.</p>
+                <p class="room-count">Total Rooms: <span id="room1-count">10</span></p>
+                <button class="book-button" onclick="redirectToBooking('room1-count')">Book Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="room">
+            <img src="https://3.bp.blogspot.com/-hcPjuPSs1Qc/V5SX3T8A_JI/AAAAAAAAP9M/wSjxret0iUkyhgaVbl178i2U4R0vYnS9gCLcB/s1600/the-duke-most-expensive-hotel-mulia-jakarta-luxury.jpg" alt="Room 2">
+            <div class="room-details">
+                <h2>Deluxe Room</h2>
+                <p class="room-description">Spacious room with a view.</p>
+                <p class="room-count">Total Rooms: <span id="room2-count">8</span></p>
+                <button class="book-button" onclick="redirectToBooking('room2-count')">Book Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="room">
+            <img src="https://viatravelers.com/wp-content/uploads/2021/01/presidential-suite-hotel-room.jpg" alt="Presidential Suites">
+            <div class="room-details">
+                <h2>Presidential Suites</h2>
+                <p class="room-description">Luxurious suites for the most discerning guests.</p>
+                <p class="room-count">Total Rooms: <span id="presidential-suites-count">3</span></p>
+                <button class="book-button" onclick="redirectToBooking('presidential-suites-count')">Book Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="room">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwuu5roq_NCNP7ShtsO7ORh8SOQio9_LseDgrNFLagoUlxAGaZdjUNGV4yOQJm62a9t-o&usqp=CAU" alt="Room 3">
+            <div class="room-details">
+                <h2>Double Room</h2>
+                <p class="room-description">Spacious room with two beds for double occupancy.</p>
+                <p class="room-count">Total Rooms: <span id="double-room-count">12</span></p>
+                <button class="book-button" onclick="redirectToBooking('double-room-count')">Book Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="room">
+            <img src="https://t2.gstatic.com/images?q=tbn:ANd9GcSV101JWAJHOSRsSgXScSGI_pR8Aewxgy9ID0bOtd8pF3bwt8yw" alt="Room 4">
+            <div class="room-details">
+                <h2>Minimalist Hotel Room</h2>
+                <p class="room-description">A simple yet elegant room for a minimalist stay.</p>
+                <p class="room-count">Total Rooms: <span id="minimalist-hotel-room-count">6</span></p>
+                <button class="book-button" onclick="redirectToBooking('minimalist-hotel-room-count')">Book Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="room">
+            <img src="https://viatravelers.com/wp-content/uploads/2021/01/Connecting-Room.jpeg" alt="Room 5">
+            <div class="room-details">
+                <h2>Connecting Rooms</h2>
+                <p class="room-description">Rooms with a connecting door for larger groups.</p>
+                <p class="room-count">Total Rooms: <span id="connecting-rooms-count">4</span></p>
+                <button class="book-button" onclick="redirectToBooking('connecting-rooms-count')">Book Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <script>
+        // Redirect to the booking page
+        function redirectToBooking(roomCountId) {
+            const roomCountElement = document.getElementById(roomCountId);
+            const currentCount = parseInt(roomCountElement.textContent);
+            if (currentCount > 0) {
+                roomCountElement.textContent = currentCount - 1;
+                window.location.href = '/booking.html';  // URL for the booking page
+            }
+        }
+    </script>
+</body>
+</html>

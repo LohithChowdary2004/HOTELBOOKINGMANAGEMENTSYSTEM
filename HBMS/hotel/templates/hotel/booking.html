@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGw798diyr7velAXGNSELclwe0OhanVu-0DkL9GrWiCh8gryn3QiEAdth1BgAC_y4gdjY&usqp=CAU') no-repeat center center fixed;
+            background-size: 40%; /* Adjust the size as needed */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .room-selection {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        select,
+        input[type="date"],
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #pay-now-button {
+            display: block;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px auto;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #pay-now-button:hover {
+            background-color: #0056b3;
+        }
+
+        .pay-button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirm Booking</h1>
+
+        <div class="room-selection">
+            <label for="room-count">Number of rooms:</label>
+            <select id="room-count" name="room_count">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+
+        <label for="check-in-date">Check-in Date:</label>
+        <input type="date" id="check-in-date" name="check_in_date" required>
+
+        <label for="check-out-date">Check-out Date:</label>
+        <input type="date" id="check-out-date" name "check_out_date" required>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <p class="total-price">Total Price: $<span id="total-price">100</span></p>
+        <form id="payment-form" action="{% url 'payment' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="price" id="hidden-price" value="100">
+            <button type="submit" class="pay-button" id="pay-now-button">Pay Now</button>
+        </form>
+    </div>
+
+    <script>
+        const roomCountSelect = document.getElementById('room-count');
+        const checkInDateInput = document.getElementById('check-in-date');
+        const checkOutDateInput = document.getElementById('check-out-date');
+        const totalPriceElement = document.getElementById('total-price');
+        const hiddenPriceInput = document.getElementById('hidden-price');
+        const paymentForm = document.getElementById('payment-form');
+
+        // Add an event listener for room count change
+        roomCountSelect.addEventListener('change', updateTotalPrice);
+        checkInDateInput.addEventListener('change', updateTotalPrice);
+        checkOutDateInput.addEventListener('change', updateTotalPrice);
+
+        function updateTotalPrice() {
+            const selectedCount = parseInt(roomCountSelect.value);
+            const roomPrice = 100; // Adjust the room price as needed
+            const checkInDate = new Date(checkInDateInput.value);
+            const checkOutDate = new Date(checkOutDateInput.value);
+            const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 3600 * 24)); // Calculate nights
+            const total = selectedCount * roomPrice * nights;
+            totalPriceElement.textContent = total;
+            hiddenPriceInput.value = total;
+        }
+
+        // Initial call to update total price
+        updateTotalPrice();
+
+        payNowButton.addEventListener('click', function() {
+            if (!validateCustomerDetails()) {
+                event.preventDefault();
+            } else {
+                paymentForm.submit();
+            }
+        });
+
+        function validateCustomerDetails() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            if (name.trim() === '' || email.trim() === '') {
+                alert('Please provide a valid name and email.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>
